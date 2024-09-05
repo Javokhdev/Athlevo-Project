@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    networks:
+      - global-network
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    networks:
+      - global-network
+  
+  postgres:
+    image: postgres:14
+    container_name: postgres_dock
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - global-network
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    environment:
+      REDIS_PASSWORD: "root"
+    networks:
+      - global-network
+
+  migrate:
+    image: migrate/migrate
+    networks:
+      - global-network
+    volumes:
+      - ./migrations:/migrations
+    command: [ "-path", "/migrations", "-database",  
+                "postgres://postgres:root@postgres_dock:5432/booking?sslmode=disable", 
+                "up" ]
+    depends_on:
+      - postgres
+networks:
+  global-network:
+    external: true 
+
+volumes:
+  postgres_data:
