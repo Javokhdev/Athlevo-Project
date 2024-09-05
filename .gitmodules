@@ -1,0 +1,15 @@
+[submodule "Api-Booking-Athlevo"]
+	path = Api-Booking-Athlevo
+	url = git@github.com:Javokhdev/Api-Booking-Athlevo.git
+[submodule "Booking-Athlevo"]
+	path = Booking-Athlevo
+	url = git@github.com:Javokhdev/Booking-Athlevo.git
+[submodule "Auth-Athlevo"]
+	path = Auth-Athlevo
+	url = git@github.com:Javokhdev/Auth-Athlevo.git
+[submodule "Api-Gym-Athlevo"]
+	path = Api-Gym-Athlevo
+	url = git@github.com:Javokhdev/Api-Gym-Athlevo.git
+[submodule "Gym-Athlevo"]
+	path = Gym-Athlevo
+	url = git@github.com:Javokhdev/Gym-Athlevo.git
