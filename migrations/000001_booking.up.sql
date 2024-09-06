@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) UNIQUE NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
     phone_number VARCHAR(20),
-    password VARCHAR(255) NOT NULL,
+    password VARCHAR(4000) NOT NULL,
     full_name VARCHAR(100),
     date_of_birth DATE,
     role role_type NOT NULL DEFAULT 'user',
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS settings (
 CREATE TABLE IF NOT EXISTS tokens (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id),
-    token VARCHAR(255) NOT NULL,
+    token TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW(),
     deleted_at BIGINT DEFAULT 0
